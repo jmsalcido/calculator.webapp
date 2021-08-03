@@ -1,13 +1,20 @@
 import React from 'react';
 import { CssBaseline } from '@material-ui/core';
-import Nav from './components/Nav'
+import { Switch, Router, Route } from 'react-router-dom';
+import SignIn from './features/auth'
+import AppNavContainer from './features/AppNavContainer';
+
+import history from './app/history';
 
 function App() {
   return (
-    <React.Fragment>
+    <Router history={history}>
       <CssBaseline />
-      <Nav />
-    </React.Fragment>
+      <Switch>
+        <Route exact path={["/signIn"]} component={SignIn} />
+        <Route component={AppNavContainer} />
+      </Switch>
+    </Router>
   );
 }
 
