@@ -58,7 +58,7 @@ export default function Nav() {
           Calculator Web App
         </Typography>
         <nav>
-          {features}
+          {features}  
         </nav>
         <Button href="/signIn" color="primary" variant="outlined" className={classes.link} onClick={handleSignInButton}>
           {loginLogoutText}
