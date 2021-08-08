@@ -1,7 +1,6 @@
 import { Paper, Typography } from "@material-ui/core";
 import React from "react";
 import { useSelector } from "react-redux";
-import Grid from '@material-ui/core/Grid';
 import materialUiStyles from "../../app/styles";
 import AuthComponent from "../auth/AuthComponent";
 import { selectUser } from "../auth/authSlice";

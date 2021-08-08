@@ -1,7 +1,8 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { logOut, selectUser } from "./authSlice";
+import { selectUser } from "./authSlice";
 import AuthComponent from "./AuthComponent";
+import { signIn } from "../../app/routes";
 
 export default function AdminComponent(props) {
 
@@ -11,7 +12,8 @@ export default function AdminComponent(props) {
     const isAdmin = isLoggedIn && user.roles.includes("ROLE_ADMIN");
 
     if (!isAdmin) {
-        logOut();
+        signIn();
+        return null;
     }
 
     return (
