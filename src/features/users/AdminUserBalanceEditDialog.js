@@ -51,7 +51,6 @@ export default function AdminUserBalanceEditDialog(props) {
 
     const onDeleteAgree = () => {
         setAlertOpen(false);
-        console.log("delete", userSelected);
         onDelete();
     }
 

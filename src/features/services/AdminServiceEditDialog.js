@@ -20,26 +20,25 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import DeleteIcon from '@material-ui/icons/Delete';
 import DeleteModal from "../modals/DeleteModal";
 
-export default function AdminUserEditDialog(props) {
-    const { classes, userSelected, onDismissEdit, onDelete } = props;
+export default function AdminServiceEditDialog(props) {
+    const { classes, serviceSelected, onDismissEdit, onDelete } = props;
 
-    const [username, setUsername] = useState(userSelected.username);
-    const [uuid, setUuid] = useState(userSelected.uuid);
-    const [role, setRole] = useState(userSelected.role);
-    const [status, setStatus] = useState(userSelected.status);
+    const [serviceType, setServiceType] = useState(serviceSelected.type);
+    const [uuid, setUuid] = useState(serviceSelected.uuid);
+    const [cost, setCost] = useState(serviceSelected.cost);
+    const [status, setStatus] = useState(serviceSelected.status);
 
     const onSaveClick = () => {
-        const editedUser = {
-            id: userSelected.id,
-            username,
+        const editedService = {
+            id: serviceSelected.id,
+            type: serviceType,
             uuid,
-            role,
+            cost,
             status,
-            userBalance: userSelected.userBalance,
         }
 
         if (props.onSaveClick) {
-            props.onSaveClick(editedUser);
+            props.onSaveClick(editedService);
         }
     }
 
@@ -79,19 +78,19 @@ export default function AdminUserEditDialog(props) {
             </AppBar>
             <List>
                 <ListItem button>
-                    <ListItemText primary="ID" secondary={userSelected.id} />
+                    <ListItemText primary="ID" secondary={serviceSelected.id} />
                 </ListItem>
                 <Divider />
                 <ListItem button>
                     <FormControl fullWidth>
-                        <InputLabel>Username</InputLabel>
+                        <InputLabel>Service Type</InputLabel>
                         <Input autoFocus
                             margin="dense"
-                            id="username"
-                            label="Username"
+                            id="type"
+                            label="Service Type"
                             type="text"
-                            defaultValue={userSelected.username}
-                            onChange={(e) => {setUsername(e.target.value)}}
+                            defaultValue={serviceSelected.type}
+                            onChange={(e) => {setServiceType(e.target.value)}}
                             fullWidth
                         />
                     </FormControl>
@@ -105,7 +104,7 @@ export default function AdminUserEditDialog(props) {
                             id="uuid"
                             label="UUID"
                             type="text"
-                            defaultValue={userSelected.uuid}
+                            defaultValue={serviceSelected.uuid}
                             onChange={(e) => {setUuid(e.target.value)}}
                             fullWidth
                         />
@@ -113,16 +112,15 @@ export default function AdminUserEditDialog(props) {
                 </ListItem>
                 <Divider />
                 <ListItem button>
-                    {/* TODO this can be a select input from 2 values. */}
                     <FormControl fullWidth>
-                        <InputLabel>Role</InputLabel>
+                        <InputLabel>Cost</InputLabel>
                         <Input
                             margin="dense"
-                            id="role"
-                            label="Role"
-                            type="text"
-                            defaultValue={userSelected.role}
-                            onChange={(e) => {setRole(e.target.value)}}
+                            id="cost"
+                            label="Cost"
+                            type="number"
+                            defaultValue={serviceSelected.cost}
+                            onChange={(e) => {setCost(e.target.value)}}
                             fullWidth
                         />
                     </FormControl>
@@ -137,7 +135,7 @@ export default function AdminUserEditDialog(props) {
                             id="status"
                             label="Status"
                             type="text"
-                            defaultValue={userSelected.status}
+                            defaultValue={serviceSelected.status}
                             onChange={(e) => {setStatus(e.target.value)}}
                             fullWidth
                         />
@@ -152,7 +150,7 @@ export default function AdminUserEditDialog(props) {
     );
 }
 
-AdminUserEditDialog.propTypes = {
+AdminServiceEditDialog.propTypes = {
     onDismissEdit: PropTypes.func.isRequired,
     onSaveClick: PropTypes.func.isRequired,
     classes: PropTypes.object.isRequired,
