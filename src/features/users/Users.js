@@ -5,10 +5,13 @@ import AdminComponent from "../auth/AdminComponent";
 import PaginationTable from "../tables/PaginationTable";
 import { headerCells, AdminUserRow } from "./AdminUserRow";
 import { getUsers } from "./usersAPI";
+import AdminUserDialog from "./AdminUserDialog";
 
 function UsersComponent(props) {
 
     const classes = materialUiStyles();
+    const [dialogOpen, setDialogOpen] = React.useState(false);
+    const [userSelected, setUserSelected] = React.useState(null);
     const [rows, setRows] = useState([]);
     const [username, setUsername] = useState("");
     const [size, setSize] = useState(5);
@@ -20,11 +23,12 @@ function UsersComponent(props) {
     }
 
     useEffect(() => {
-        fetchData("", 0, size);
+        fetchData("", 0, 5);
     }, []);
 
     const onRowClick = (row) => {
-        console.log("click from Users, open modal here.", row);
+        setUserSelected(row);
+        setDialogOpen(true);
     };
 
     const onChangePage = (pageNumber) => {
@@ -40,6 +44,23 @@ function UsersComponent(props) {
         const username = e.target.value;
         setUsername(username);
         fetchData(username, 0, size);
+    }
+
+    const onCloseDialog = (receivedUser, deleted) => {
+        if (deleted) {
+            setRows(rows.filter((value) => {
+                return value.id !== receivedUser.id;
+            }));
+        } else if (receivedUser) {
+            setRows(rows.map((value) => {
+                if (value.id === receivedUser.id) {
+                    return receivedUser;
+                }
+
+                return value;
+            }));
+        }
+        setDialogOpen(false);
     }
 
     return (
@@ -65,6 +86,10 @@ function UsersComponent(props) {
                     rowsPerPage={size}
                     cells={headerCells}/>
             </Paper>
+            <AdminUserDialog dialogOpen={dialogOpen} 
+                onCloseDialog={onCloseDialog}
+                userSelected={userSelected}
+                />
         </main>
     )
 }

@@ -226,7 +226,6 @@ export default function PaginationTable(props) {
             />
             <TableBody>
               {stableSort(rows, getComparator(order, orderBy))
-                // .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
                   return (
                     <TableRow

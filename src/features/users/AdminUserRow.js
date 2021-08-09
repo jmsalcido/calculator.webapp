@@ -4,11 +4,11 @@ import PropTypes from 'prop-types';
 import { TableCell } from "@material-ui/core";
 
 export const headerCells = [
+    {id: "id", label: "ID"},
     {id: "username", label: "Username"},
     {id: "uuid", label: "UUID"},
     {id: "role", label: "Role"},
     {id: "status", label: "Status"},
-    {id: "userBalance", label: "User Balance"},
 ];
 
 export function AdminUserRow(props) {
@@ -18,12 +18,12 @@ export function AdminUserRow(props) {
     return (
         <React.Fragment>
             <TableCell component="th" id={labelId} scope="row" padding="none">
-                    {rowValues.username}
+                    {rowValues.id}
             </TableCell>
-            <TableCell align="right">{rowValues.uuid}</TableCell>
+            <TableCell align="right">{rowValues.username}</TableCell>
+            <TableCell align="center">{rowValues.uuid}</TableCell>
             <TableCell align="right">{rowValues.role}</TableCell>
             <TableCell align="right">{rowValues.status}</TableCell>
-            <TableCell align="right">{rowValues.userBalance}</TableCell>
         </React.Fragment>
     );
 }
