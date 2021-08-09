@@ -1,38 +1,46 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Paper, Typography } from "@material-ui/core";
 import materialUiStyles from "../../app/styles";
 import AdminComponent from "../auth/AdminComponent";
 import PaginationTable from "../tables/PaginationTable";
-import AdminUserRow from "./AdminUserRow";
+import { headerCells, AdminUserRow } from "./AdminUserRow";
+import { getUsers } from "./usersAPI";
 
 function UsersComponent(props) {
 
     const classes = materialUiStyles();
+    const [rows, setRows] = useState([]);
+    const [username, setUsername] = useState("");
+    const [size, setSize] = useState(5);
 
-    const rows = [
-        {
-            username: "jose",
-            uuid: "493c585b-2dea-4036-8513-b7195c363000",
-            role: "admin",
-            status: "ACTIVE",
-            userBalance: 1000,
-        },
-        {
-            username: "jose2",
-            uuid: "493c585b-2dea-4036-8513-b7195c363000",
-            role: "user",
-            status: "ACTIVE",
-            userBalance: 50,
-        }
-    ];
+    async function fetchData(username, pageNumber, size) {
+        const answer = await getUsers(username, pageNumber, size);
+        // TODO handle errors?
+        setRows(answer.result);
+    }
 
-    const cells = [
-        {id: "username", label: "Username"},
-        {id: "uuid", label: "UUID"},
-        {id: "role", label: "Role"},
-        {id: "status", label: "Status"},
-        {id: "userBalance", label: "User Balance"},
-    ];
+    useEffect(() => {
+        fetchData("", 0, size);
+    }, []);
+
+    const onRowClick = (row) => {
+        console.log("click from Users, open modal here.", row);
+    };
+
+    const onChangePage = (pageNumber) => {
+        fetchData(username, pageNumber, size);
+    };
+
+    const onRowsPerPageChange = (pageSize) => {
+        setSize(pageSize);
+        fetchData(username, 0, pageSize);
+    };
+
+    const onChangeSearch = (e) => {
+        const username = e.target.value;
+        setUsername(username);
+        fetchData(username, 0, size);
+    }
 
     return (
         <main>
@@ -41,10 +49,21 @@ function UsersComponent(props) {
                     Users Dashboard
                 </Typography>
                 <br/>
+                <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Search by username"
+                    value={username}
+                    onChange={onChangeSearch}
+                />
                 <PaginationTable title="Users" 
-                    rows={rows} 
+                    rows={rows}
                     rowElementType={AdminUserRow}
-                    cells={cells}/>
+                    onRowClick={onRowClick}
+                    onChangePage={onChangePage}
+                    onRowsPerPageChange={onRowsPerPageChange}
+                    rowsPerPage={size}
+                    cells={headerCells}/>
             </Paper>
         </main>
     )

@@ -161,11 +161,11 @@ const useStyles = makeStyles((theme) => ({
 export default function PaginationTable(props) {
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
-  // TODO make this use the first element of the cells?
-  const [orderBy, setOrderBy] = React.useState('calories');
+  const [orderBy, setOrderBy] = React.useState('');
   const [page, setPage] = React.useState(0);
-  const dense = React.useState(true)
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+
+  const dense = false;
+  const [rowsPerPage, setRowsPerPage] = React.useState(props.rowsPerPage ? props.rowsPerPage : 10);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -173,21 +173,28 @@ export default function PaginationTable(props) {
     setOrderBy(property);
   };
 
-  const handleClick = (event, name) => {
-    // TODO this opens a pop up.
-    console.log("open a pop up - ", name);
+  const handleClick = (event, row) => {
+    if (props.onRowClick) {
+      props.onRowClick(row);
+    } else {
+      console.log("default behavior log the row - ", row);
+    }
   };
 
   const handleChangePage = (event, newPage) => {
-    // TODO call api (or probly this is going to be a hook!)
-    console.log("call api for next page", newPage);
+    if (props.onChangePage) {
+      props.onChangePage(newPage);
+    }
+
     setPage(newPage);
   };
 
   const handleChangeRowsPerPage = (event) => {
-    // TODO this 
-    console.log("call api for change size", event.target.value);
-    setRowsPerPage(parseInt(event.target.value, 10));
+    const rowsPerPage = parseInt(event.target.value, 10);
+    if (props.onRowsPerPageChange) {
+      props.onRowsPerPageChange(rowsPerPage);
+    }
+    setRowsPerPage(rowsPerPage);
     setPage(0);
   };
 
@@ -195,7 +202,8 @@ export default function PaginationTable(props) {
   const cells = props.cells;
   const rowElementType = props.rowElementType;
 
-  const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
+  const emptyRows = 0;
+  // const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
   return (
     <div className={classes.root}>
@@ -218,13 +226,12 @@ export default function PaginationTable(props) {
             />
             <TableBody>
               {stableSort(rows, getComparator(order, orderBy))
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                // .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
                   return (
                     <TableRow
                       hover
                       onClick={(event) => handleClick(event, row)}
-                      role="checkbox"
                       tabIndex={-1}
                       key={index}
                     >
@@ -244,9 +251,9 @@ export default function PaginationTable(props) {
           </Table>
         </TableContainer>
         <TablePagination
-          rowsPerPageOptions={[10]}
+          rowsPerPageOptions={[1, 5, 10]}
           component="div"
-          count={rows.length}
+          count={-1}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
@@ -262,4 +269,8 @@ PaginationTable.propTypes = {
   rows: PropTypes.arrayOf(PropTypes.object),
   rowElementType: PropTypes.elementType.isRequired,
   cells: PropTypes.arrayOf(PropTypes.object),
+  onRowClick: PropTypes.func,
+  onChangePage: PropTypes.func,
+  onRowsPerPageChange: PropTypes.func,
+  rowsPerPage: PropTypes.number,
 };
