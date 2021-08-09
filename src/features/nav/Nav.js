@@ -22,7 +22,7 @@ export default function Nav() {
   if (isAdmin) {
     featuresToShow.push(
       { value: 'Users', href: '/users' },
-      { value: 'User Balance', href: '/user-balance' },
+      { value: 'User Balance', href: '/user-balances' },
       { value: 'Services', href: '/services' },
       { value: 'Records', href: '/records' },
     );

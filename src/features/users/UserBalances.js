@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
 import { Input, Paper, Typography } from "@material-ui/core";
+import React, { useEffect, useState } from "react";
 import materialUiStyles from "../../app/styles";
 import AdminComponent from "../auth/AdminComponent";
 import PaginationTable from "../tables/PaginationTable";
-import { headerCells, AdminUserRow } from "./AdminUserRow";
+import AdminUserBalanceDialog from "./AdminUserBalanceDialog";
+import AdminUserBalanceRow, { headerCells } from "./AdminUserBalanceRow";
 import { getUsers } from "./usersAPI";
-import AdminUserDialog from "./AdminUserDialog";
 
-function UsersComponent() {
+function UserBalancesComponent() {
 
     const defaultInitialSize = 5;
     const classes = materialUiStyles();
@@ -68,7 +68,7 @@ function UsersComponent() {
         <main>
             <Paper className={classes.paper}>
                 <Typography variant="h6" align="center" gutterBottom>
-                    Users Dashboard
+                    User Balance Dashboard
                 </Typography>
                 <br/>
                 <Input
@@ -78,27 +78,28 @@ function UsersComponent() {
                     value={username}
                     onChange={onChangeSearch}
                 />
-                <PaginationTable title="Users" 
+                <PaginationTable title="User Balance" 
                     rows={rows}
-                    rowElementType={AdminUserRow}
+                    rowElementType={AdminUserBalanceRow}
                     onRowClick={onRowClick}
                     onChangePage={onChangePage}
                     onRowsPerPageChange={onRowsPerPageChange}
                     rowsPerPage={size}
                     cells={headerCells}/>
             </Paper>
-            <AdminUserDialog dialogOpen={dialogOpen} 
+            <AdminUserBalanceDialog dialogOpen={dialogOpen} 
                 onCloseDialog={onCloseDialog}
                 userSelected={userSelected}
                 />
         </main>
-    )
+    );
+
 }
 
-export default function Users() {
+export default function UserBalances() {
     return (
         <AdminComponent>
-            <UsersComponent />
+            <UserBalancesComponent />
         </AdminComponent>
-    );
+    );   
 }

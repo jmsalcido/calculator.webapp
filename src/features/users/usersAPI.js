@@ -33,7 +33,8 @@ export async function updateUser(user) {
     username: user.username,
     uuid: user.uuid,
     role: user.role,
-    status: user.status
+    status: user.status,
+    userBalance: user.userBalance,
   },
   {
     headers: authHeaders()

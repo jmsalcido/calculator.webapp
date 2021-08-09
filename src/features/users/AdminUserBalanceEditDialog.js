@@ -20,13 +20,13 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import DeleteIcon from '@material-ui/icons/Delete';
 import DeleteModal from "../modals/DeleteModal";
 
-export default function AdminUserEditDialog(props) {
+export default function AdminUserBalanceEditDialog(props) {
     const { classes, userSelected, onDismissEdit, onDelete } = props;
 
-    const [username, setUsername] = useState(userSelected.username);
-    const [uuid, setUuid] = useState(userSelected.uuid);
-    const [role, setRole] = useState(userSelected.role);
-    const [status, setStatus] = useState(userSelected.status);
+    const [username] = useState(userSelected.username);
+    const [uuid] = useState(userSelected.uuid);
+    const [role] = useState(userSelected.role);
+    const [userBalance, setUserBalance] = useState(userSelected.userBalance);
 
     const onSaveClick = () => {
         const editedUser = {
@@ -34,8 +34,8 @@ export default function AdminUserEditDialog(props) {
             username,
             uuid,
             role,
-            status,
-            userBalance: userSelected.userBalance,
+            userBalance: parseInt(userBalance),
+            status: userSelected.status,
         }
 
         if (props.onSaveClick) {
@@ -84,62 +84,27 @@ export default function AdminUserEditDialog(props) {
                 </ListItem>
                 <Divider />
                 <ListItem button>
-                    <FormControl fullWidth>
-                        <InputLabel>Username</InputLabel>
-                        <Input autoFocus
-                            margin="dense"
-                            id="username"
-                            label="Username"
-                            type="text"
-                            defaultValue={userSelected.username}
-                            onChange={(e) => {setUsername(e.target.value)}}
-                            fullWidth
-                        />
-                    </FormControl>
+                    <ListItemText primary="Username" secondary={userSelected.username} />
+                </ListItem>
+                <Divider />
+                <ListItem button>
+                    <ListItemText primary="UUID" secondary={userSelected.uuid} />
+                </ListItem>
+                <Divider />
+                <ListItem button>
+                    <ListItemText primary="Role" secondary={userSelected.role} />
                 </ListItem>
                 <Divider />
                 <ListItem button>
                     <FormControl fullWidth>
-                        <InputLabel>UUID</InputLabel>
-                        <Input
-                            margin="dense"
-                            id="uuid"
-                            label="UUID"
-                            type="text"
-                            defaultValue={userSelected.uuid}
-                            onChange={(e) => {setUuid(e.target.value)}}
-                            fullWidth
-                        />
-                    </FormControl>
-                </ListItem>
-                <Divider />
-                <ListItem button>
-                    {/* TODO this can be a select input from 2 values. */}
-                    <FormControl fullWidth>
-                        <InputLabel>Role</InputLabel>
-                        <Input
-                            margin="dense"
-                            id="role"
-                            label="Role"
-                            type="text"
-                            defaultValue={userSelected.role}
-                            onChange={(e) => {setRole(e.target.value)}}
-                            fullWidth
-                        />
-                    </FormControl>
-                </ListItem>
-                <Divider />
-                <ListItem button>
-                    {/* TODO this can be a select input from the values. */}
-                    <FormControl fullWidth>
-                        <InputLabel>Status</InputLabel>
+                        <InputLabel>User Balance</InputLabel>
                         <Input
                             margin="dense"
                             id="status"
-                            label="Status"
-                            type="text"
-                            defaultValue={userSelected.status}
-                            onChange={(e) => {setStatus(e.target.value)}}
+                            label="User Balance"
+                            type="number"
+                            defaultValue={userSelected.userBalance}
+                            onChange={(e) => {setUserBalance(e.target.value)}}
                             fullWidth
                         />
                     </FormControl>
@@ -153,7 +118,7 @@ export default function AdminUserEditDialog(props) {
     );
 }
 
-AdminUserEditDialog.propTypes = {
+AdminUserBalanceEditDialog.propTypes = {
     onDismissEdit: PropTypes.func.isRequired,
     onSaveClick: PropTypes.func.isRequired,
     classes: PropTypes.object.isRequired,
