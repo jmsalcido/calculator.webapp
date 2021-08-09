@@ -5,6 +5,7 @@ import Home from '../features/home';
 import Nav from '../features/nav';
 import MyProfile from './profile/MyProfile';
 import Records from './records/Records';
+import UserRecords from './records/user/UserRecords';
 import Services from './services/Services';
 import UserBalances from './users/UserBalances';
 import Users from './users/Users';
@@ -19,7 +20,7 @@ export default function AppNavContainer() {
             <Route exact path="/services" component={Services} />
             <Route exact path="/profile" component={MyProfile} />
             <Route exact path="/records" component={Records} />
-            {/* <Route path="/user" component={Home} /> */}
+            <Route exact path="/user-records" component={UserRecords} />
         </React.Fragment>
     );
 }

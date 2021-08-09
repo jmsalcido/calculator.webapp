@@ -17,6 +17,20 @@ export async function getRecords(serviceType, page, size) {
   return response.data;
 }
 
+export async function getUserRecords(serviceType, page, size) {
+  const response = await axios.get(API_URL + "v1/records/user",
+  {
+    params: {
+      serviceType,
+      page,
+      size
+    },
+    headers: authHeaders()
+  });
+
+  return response.data;
+}
+
 export async function deleteRecord(recordId) {
   const response = await axios.delete(API_URL + "v1/records/delete/" + recordId,
   {
