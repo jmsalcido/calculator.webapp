@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
 
 const componentToOperationType = {
     "ADDITION": AdditionComponent,
-    "SUBSTRACTION": SubstractionComponent,
+    "SUBTRACTION": SubstractionComponent,
     "DIVISION": DivisionComponent,
     "MULTIPLICATION": MultiplicationComponent,
     "FREE_FORM": FreeFormComponent,

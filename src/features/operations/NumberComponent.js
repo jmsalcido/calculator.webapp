@@ -30,7 +30,7 @@ export function AdditionComponent(props) {
     );
 }
 
-export function SubstractionComponent(props) {
+export function SubtractionComponent(props) {
     return (
         <React.Fragment>
             <NumberComponent operationSign="-" 
