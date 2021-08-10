@@ -9,6 +9,7 @@ import {
 import DigitsView from "./DigitsView";
 import ControlForm from "./ControlForm";
 import NumbersView from "./NumbersView";
+import { submitOperation } from "./operationsAPI";
 
 // NumberComponent
 //
@@ -23,7 +24,8 @@ export function AdditionComponent(props) {
     return (
         <React.Fragment>
             <NumberComponent operationSign="+" 
-                             serviceType={props.serviceType}/>
+                             serviceType={props.serviceType}
+                             onSubmitHandle={props.onSubmitHandle}/>
         </React.Fragment>
     );
 }
@@ -32,7 +34,8 @@ export function SubstractionComponent(props) {
     return (
         <React.Fragment>
             <NumberComponent operationSign="-" 
-                             serviceType={props.serviceType}/>
+                             serviceType={props.serviceType}
+                             onSubmitHandle={props.onSubmitHandle}/>
         </React.Fragment>
     );
 }
@@ -41,7 +44,8 @@ export function MultiplicationComponent(props) {
     return (
         <React.Fragment>
             <NumberComponent operationSign="*" 
-                             serviceType={props.serviceType}/>
+                             serviceType={props.serviceType}
+                             onSubmitHandle={props.onSubmitHandle}/>
         </React.Fragment>
     );
 }
@@ -50,7 +54,8 @@ export function DivisionComponent(props) {
     return (
         <React.Fragment>
             <NumberComponent operationSign="/" 
-                             serviceType={props.serviceType}/>
+                             serviceType={props.serviceType}
+                             onSubmitHandle={props.onSubmitHandle}/>
         </React.Fragment>
     );
 }
@@ -60,7 +65,8 @@ export function SquareRootComponent(props) {
         <React.Fragment>
             <NumberComponent operationSign="√"
                              singleNumber={true}
-                             serviceType={props.serviceType}/>
+                             serviceType={props.serviceType}
+                             onSubmitHandle={props.onSubmitHandle}/>
         </React.Fragment>
     );
 }
@@ -68,11 +74,15 @@ export function SquareRootComponent(props) {
 
 export default function NumberComponent(props) {
     const classes = materialUiStyles();
-    const { serviceType, operationSign } = props;
+    const { serviceType, operationSign, onSubmitHandle } = props;
     const [numbers, setNumbers] = useState([]);
     const [currentNumber, setCurrentNumber] = useState([0]);
     const [negative, setNegative] = useState(false);
     const [singleNumber] = useState(props.singleNumber ? props.singleNumber : false);
+
+    const currentNumberValue = () => {
+        return parseInt(currentNumber.join(""));
+    }
 
     const handleDigit = (e) => {
         const currentValue = currentNumberValue();
@@ -122,10 +132,6 @@ export default function NumberComponent(props) {
         setNegative(!negative);
     }
 
-    const disableEnter = singleNumber
-        ? numbers.length === 1
-        : currentNumberValue() === 0;
-
     const handleEnterButton = (e) => {
         const newNumber = currentNumberValue();
         if (newNumber === 0) {
@@ -136,11 +142,16 @@ export default function NumberComponent(props) {
         clearCurrentNumber();
     }
 
-    const currentNumberValue = () => {
-        return parseInt(currentNumber.join(""));
+    const disableEnter = singleNumber
+        ? numbers.length === 1
+        : currentNumberValue() === 0;
+
+    async function submit(e, body) {
+        const answer = await submitOperation(body);
+        onSubmitHandle(e, answer);
     }
 
-    const handleSubmitButton = () => {
+    const handleSubmitButton = (e) => {
         const currentValue = currentNumberValue();
         const actualNumbers = [...numbers, currentValue];
         let body;
@@ -155,9 +166,8 @@ export default function NumberComponent(props) {
                 numbers: actualNumbers
             }
         }
-        console.log("call api", body);
-        // wait for result
-        // property to LOAD result?
+
+        submit(e, body);
     }
 
     const disableSubmit = singleNumber
