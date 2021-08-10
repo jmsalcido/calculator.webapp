@@ -1,3 +1,44 @@
+# Calculator Web App
+Implement a Web platform to provide a simple calculator functionality.
+
+## Live Url:
+https://jmsalcido-calculator-webapp.herokuapp.com/
+
+Ask for default user credentials.
+
+### TODO Items:
+In priority these are the items that should be handled:
+
+- Sign Up view.
+- Create Resource UI, there is only edit/view right now
+- Pagination is not fully implemented (viewing).
+- Services list (New Service) should return from backend
+- UX: Loading screens can be better.
+- UI: Use correct Material UI styles, justiy/align the components.
+- Better error handling.
+- Create generic/common Dialog (Edit/View) logic.
+
+## Run the App:
+`npm install && npm start`
+
+or with Docker and Docker Compose:
+
+### Docker
+```
+docker build -t calculator.webapp:latest .
+docker run --name calculator.webapp -d -p 3000:3000 calculator.webapp:latest
+```
+
+### Docker Compose:
+`docker-compose up`
+
+This will start the app over the port `3000`, backend URL can be changed over the Dockerfile, using the `calculator.api` project the default port is `8080`.
+
+Backend repository is over:
+https://github.com/jmsalcido/calculator.api
+
+## Create React App
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template.
 
 ## Available Scripts
