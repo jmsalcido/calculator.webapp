@@ -8,7 +8,7 @@ import {
     DivisionComponent,
     MultiplicationComponent,
     SquareRootComponent,
-    SubstractionComponent
+    SubtractionComponent
 } from "./NumberComponent";
 import RandomStringComponent from "./RandomStringComponent";
 import ResultView from "./ResultView";
@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
 
 const componentToOperationType = {
     "ADDITION": AdditionComponent,
-    "SUBTRACTION": SubstractionComponent,
+    "SUBTRACTION": SubtractionComponent,
     "DIVISION": DivisionComponent,
     "MULTIPLICATION": MultiplicationComponent,
     "FREE_FORM": FreeFormComponent,
