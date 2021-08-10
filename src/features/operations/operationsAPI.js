@@ -1,7 +1,6 @@
 import axios from "axios";
 import authHeaders from "../../app/network/authHeaders";
-
-const API_URL = "http://localhost:8080/"
+import API_URL from "../../app/network/api";
 
 export async function submitOperation(body) {
     try {

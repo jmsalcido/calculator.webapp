@@ -1,7 +1,6 @@
 import axios from "axios";
 import history from '../../app/history';
-
-const API_URL = "http://localhost:8080/"
+import API_URL from "../../app/network/api";
 
 export async function logInAPI(username, password) {
     const response = await axios.post(API_URL + "v1/users/login", {
