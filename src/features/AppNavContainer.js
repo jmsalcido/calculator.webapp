@@ -9,6 +9,7 @@ import UserRecords from './records/user/UserRecords';
 import Services from './services/Services';
 import UserBalances from './users/UserBalances';
 import Users from './users/Users';
+import { Services as OperationServices } from './operations/Services';
 
 export default function AppNavContainer() {
     return (
@@ -21,6 +22,7 @@ export default function AppNavContainer() {
             <Route exact path="/profile" component={MyProfile} />
             <Route exact path="/records" component={Records} />
             <Route exact path="/user-records" component={UserRecords} />
+            <Route exact path="/service/new" component={OperationServices} />
         </React.Fragment>
     );
 }
